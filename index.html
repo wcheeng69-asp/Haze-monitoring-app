@@ -9,46 +9,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,300;6..72,400&family=Geist+Mono:wght@400;500&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* Layout: single centered column, card grid; map left + detail right on Singapore tab */
-  --bg: #f4f6f7;
-  --card: #ffffff;
-  --ink: #1d2a30;
-  --muted: #6b7b83;
-  --line: #e4e9eb;
-  --accent: #e2703a;
-  --accent-soft: #fbe9df;
-  --water: #eaf0f2;
-  --b0: #3f9d78; --b0t: #dff1e9;
-  --b1: #c49a1f; --b1t: #f6ecc9;
-  --b2: #d9722f; --b2t: #f9dfcb;
-  --b3: #b8404a; --b3t: #f3d3d6;
-  --b4: #7a3b8f; --b4t: #e6d4ec;
+  /* Dark theme, pink accent */
+  color-scheme: dark;
+  --bg: #0f1315;
+  --card: #171c1f;
+  --ink: #e9eef0;
+  --muted: #8f9ca2;
+  --line: #273035;
+  --accent: #ff6bb0;
+  --accent-soft: #3b1a2d;
+  --on-accent: #1d0b15;
+  --sun: #f3b64a;
+  --rain: #6cb6ff;
+  --water: #151e22;
   --font-display: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: "DM Mono", ui-monospace, "SF Mono", Menlo, monospace;
-  --shadow: 0 1px 2px rgba(29,42,48,.04), 0 8px 24px rgba(29,42,48,.05);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    color-scheme: dark;
-    --bg: #12191c; --card: #1a2327; --ink: #e8eef0; --muted: #8fa0a7; --line: #28343a;
-    --accent: #f0864f; --accent-soft: #3a2519; --water: #151e22;
-    --b0: #5bbd95; --b0t: #1d3329;
-    --b1: #dcb43c; --b1t: #373019;
-    --b2: #ef8a4a; --b2t: #3b2819;
-    --b3: #db6670; --b3t: #3d2125;
-    --b4: #b97fd0; --b4t: #31213a;
-    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
-  }
-}
-:root[data-theme="dark"] {
-  color-scheme: dark;
-  --bg: #12191c; --card: #1a2327; --ink: #e8eef0; --muted: #8fa0a7; --line: #28343a;
-  --accent: #f0864f; --accent-soft: #3a2519; --water: #151e22;
-  --b0: #5bbd95; --b0t: #1d3329;
-  --b1: #dcb43c; --b1t: #373019;
-  --b2: #ef8a4a; --b2t: #3b2819;
-  --b3: #db6670; --b3t: #3d2125;
-  --b4: #b97fd0; --b4t: #31213a;
   --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
 }
 * { box-sizing: border-box; }
@@ -71,7 +46,7 @@ header { display: flex; flex-wrap: wrap; justify-content: space-between; align-i
 
 nav { display: inline-flex; padding: 4px; background: var(--card); border: 1px solid var(--line); border-radius: 99px; gap: 4px; align-self: flex-start; }
 nav button { border: 0; background: transparent; padding: 8px 20px; border-radius: 99px; font-weight: 600; font-size: 14px; color: var(--muted); }
-nav button[aria-selected="true"] { background: var(--accent); color: #fff; }
+nav button[aria-selected="true"] { background: var(--accent); color: var(--on-accent); }
 
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; padding: 28px; box-shadow: var(--shadow); }
 .card-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; }
@@ -79,9 +54,9 @@ nav button[aria-selected="true"] { background: var(--accent); color: #fff; }
 .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 
 .sg-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 24px; align-items: stretch; }
-.seg { display: inline-flex; padding: 3px; background: var(--bg); border-radius: 99px; }
+.seg { display: inline-flex; padding: 3px; background: var(--card); border: 1px solid var(--line); border-radius: 99px; }
 .seg button { border: 0; background: transparent; padding: 5px 14px; border-radius: 99px; font-size: 13px; font-weight: 600; color: var(--muted); }
-.seg button[aria-pressed="true"] { background: var(--card); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.12); }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--on-accent); }
 
 .map-box { background: var(--water); border-radius: 14px; padding: 8px; }
 .map-box svg { width: 100%; height: auto; display: block; }
@@ -388,12 +363,12 @@ function wmo(code) {
   return ['Cloudy', 'cloud'];
 }
 function icon(kind, size = 44) {
-  const sun = '<circle cx="24" cy="22" r="8" fill="var(--accent)"/>' + [0,45,90,135,180,225,270,315].map(a => `<line x1="24" y1="8" x2="24" y2="11" stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round" transform="rotate(${a} 24 22)"/>`).join('');
+  const sun = '<circle cx="24" cy="22" r="8" fill="var(--sun)"/>' + [0,45,90,135,180,225,270,315].map(a => `<line x1="24" y1="8" x2="24" y2="11" stroke="var(--sun)" stroke-width="2.5" stroke-linecap="round" transform="rotate(${a} 24 22)"/>`).join('');
   const cloud = '<path d="M14 38h20a7 7 0 0 0 .8-13.95A10 10 0 0 0 15.3 26 6 6 0 0 0 14 38z" fill="var(--line)" stroke="var(--muted)" stroke-width="1.5"/>';
   let inner = '';
   if (kind === 'sun') inner = sun;
   if (kind === 'cloud') inner = '<g transform="translate(8 -8) scale(.7)">' + sun + '</g>' + cloud;
-  if (kind === 'rain') inner = cloud + '<g stroke="var(--accent)" stroke-width="2.5" stroke-linecap="round"><line x1="17" y1="41" x2="15" y2="46"/><line x1="25" y1="41" x2="23" y2="46"/><line x1="33" y1="41" x2="31" y2="46"/></g>';
+  if (kind === 'rain') inner = cloud + '<g stroke="var(--rain)" stroke-width="2.5" stroke-linecap="round"><line x1="17" y1="41" x2="15" y2="46"/><line x1="25" y1="41" x2="23" y2="46"/><line x1="33" y1="41" x2="31" y2="46"/></g>';
   if (kind === 'haze') inner = '<g stroke="var(--muted)" stroke-width="3" stroke-linecap="round" opacity=".75"><line x1="8" y1="26" x2="40" y2="26"/><line x1="12" y1="32" x2="44" y2="32"/><line x1="8" y1="38" x2="36" y2="38"/></g>';
   return `<svg width="${size}" height="${size}" viewBox="0 0 48 48" aria-hidden="true">${inner}</svg>`;
 }
